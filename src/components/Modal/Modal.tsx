@@ -10,26 +10,26 @@ interface ModalProps {
 }
 
 export const Modal: FC<ModalProps> = ({ onClose, children }): JSX.Element => {
-  const isModalOpened = useRef<boolean>(false);
+  const isModalOpenedRef = useRef<boolean>(false);
 
   const closeModal = (e: KeyboardEvent | React.MouseEvent<HTMLDivElement>) => {
     if (
       (e instanceof KeyboardEvent && e.code === "Escape") ||
-      (e instanceof MouseEvent && e.currentTarget === e.target)
+      e.currentTarget === e.target
     ) {
       onClose();
     }
   };
 
   useEffect(() => {
-    if (isModalOpened.current === false) {
-      isModalOpened.current = true;
+    if (isModalOpenedRef.current === false) {
+      isModalOpenedRef.current = true;
       window.addEventListener("keydown", closeModal);
       return;
     }
 
     return () => window.removeEventListener("keydown", closeModal);
-  });
+  }, []);
 
   return createPortal(
     <Backdrop onClick={closeModal}>

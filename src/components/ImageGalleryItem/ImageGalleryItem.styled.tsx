@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const GalleryItem = styled.li`
   height: 260px;
@@ -13,8 +13,9 @@ export const Image = styled.img`
   height: 100%;
   object-fit: cover;
   transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
 
-  :hover {
+  &:hover {
     transform: scale(1.03);
     cursor: zoom-in;
   }

@@ -14,17 +14,16 @@ export const ImageGallery: FC<ImageGalleryProps> = ({
   const [showedModal, setShowedModal] = useState<boolean>(false);
   const [imageId, setImageId] = useState<number>(0);
 
-  const toggleModal = () => setShowedModal(!showedModal);
+  const toggleModal = (): void => setShowedModal(!showedModal);
 
-  const getImageIdByClick = (id: number) => {
+  const getImageIdByClick = (id: number): void => {
     setImageId(id);
     toggleModal();
   };
 
   const getLargeImgUrlForModal = (): string => {
-    const selectedImg = images.find(({ id }) => id === imageId);
-    if (selectedImg) return selectedImg.largeImageURL;
-    return "";
+    const selectedImg = images.filter(({ id }) => id === imageId)[0];
+    return selectedImg ? selectedImg.largeImageURL : "";
   };
 
   return (

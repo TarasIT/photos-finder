@@ -11,8 +11,9 @@ export const ImageGalleryItem: FC<ImageGalleryItemProps> = ({
   onSelectImage,
   images,
 }): JSX.Element[] => {
-  const selectImage = (e: React.MouseEvent<HTMLLIElement>) =>
+  const selectImage = (e: React.MouseEvent<HTMLLIElement>): void => {
     onSelectImage(Number(e.currentTarget.id));
+  };
 
   return images.map(({ id, webformatURL, tags }) => {
     return (
