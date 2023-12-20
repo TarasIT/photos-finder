@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 export const Gallery = styled.ul`
@@ -29,6 +29,12 @@ export const LeftArrow = styled(FaArrowLeft)`
   &:focus {
     color: white;
   }
+
+  ${css`
+    @media screen and (max-width: 480px) {
+      left: 0;
+    }
+  `}
 `;
 
 export const RightArrow = styled(FaArrowRight)`
@@ -46,4 +52,20 @@ export const RightArrow = styled(FaArrowRight)`
   &:focus {
     color: white;
   }
+
+  ${css`
+    @media screen and (max-width: 480px) {
+      right: 0;
+    }
+  `}
+`;
+
+export const Image = styled.img`
+  width: 70vw;
+
+  ${css`
+    @media screen and (max-width: 480px) {
+      width: 90vw;
+    }
+  `}
 `;

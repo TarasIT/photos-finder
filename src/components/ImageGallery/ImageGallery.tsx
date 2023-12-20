@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import { ImageGalleryItem } from "../ImageGalleryItem/ImageGalleryItem";
 import { Modal } from "../Modal/Modal";
-import { Gallery, LeftArrow, RightArrow } from "./ImageGallery.styled";
+import { Gallery, Image, LeftArrow, RightArrow } from "./ImageGallery.styled";
 import { ImageItem } from "../../types/imagesTypes";
 
 interface ImageGalleryProps {
@@ -68,7 +68,7 @@ export const ImageGallery: FC<ImageGalleryProps> = ({
       {isModalOpened && (
         <Modal onClose={(): void => setIsModalOpened(false)}>
           <LeftArrow id="prevImage" onClick={changeImageByClick} />
-          <img src={getLargeImgUrl()} width="1000" alt="Big image" />
+          <Image src={getLargeImgUrl()} alt="Big image" />
           <RightArrow id="nextImage" onClick={changeImageByClick} />
         </Modal>
       )}
