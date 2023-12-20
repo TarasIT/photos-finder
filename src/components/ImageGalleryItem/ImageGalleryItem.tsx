@@ -1,25 +1,26 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { GalleryItem, Image } from "./ImageGalleryItem.styled";
 import { ImageItem } from "../../types/imagesTypes";
 
 interface ImageGalleryItemProps {
   images: ImageItem[];
-  onSelectImage: (id: number) => void;
+  getImageIndex: (index: number) => void;
 }
 
 export const ImageGalleryItem: FC<ImageGalleryItemProps> = ({
-  onSelectImage,
   images,
+  getImageIndex,
 }): JSX.Element[] => {
   const selectImage = (e: React.MouseEvent<HTMLLIElement>): void => {
-    onSelectImage(Number(e.currentTarget.id));
+    const index = images.findIndex(
+      ({ id }) => Number(e.currentTarget.id) === id
+    );
+    getImageIndex(index);
   };
 
-  return images.map(({ id, webformatURL, tags }) => {
-    return (
-      <GalleryItem key={id.toString()} id={id.toString()} onClick={selectImage}>
-        <Image src={webformatURL} alt={tags} />
-      </GalleryItem>
-    );
-  });
+  return images.map(({ id, webformatURL, tags }) => (
+    <GalleryItem key={id.toString()} id={id.toString()} onClick={selectImage}>
+      <Image src={webformatURL} alt={tags} />
+    </GalleryItem>
+  ));
 };

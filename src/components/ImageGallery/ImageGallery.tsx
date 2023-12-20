@@ -1,7 +1,7 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { ImageGalleryItem } from "../ImageGalleryItem/ImageGalleryItem";
 import { Modal } from "../Modal/Modal";
-import { Gallery } from "./ImageGallery.styled";
+import { Gallery, LeftArrow, RightArrow } from "./ImageGallery.styled";
 import { ImageItem } from "../../types/imagesTypes";
 
 interface ImageGalleryProps {
@@ -11,27 +11,65 @@ interface ImageGalleryProps {
 export const ImageGallery: FC<ImageGalleryProps> = ({
   images,
 }): JSX.Element => {
-  const [showedModal, setShowedModal] = useState<boolean>(false);
-  const [imageId, setImageId] = useState<number>(0);
+  const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
+  let [imageIndex, setImageIndex] = useState<number | null>(null);
 
-  const toggleModal = (): void => setShowedModal(!showedModal);
+  useEffect(() => {
+    window.addEventListener("keydown", changeImageByKeydown);
+    return () => window.removeEventListener("keydown", changeImageByKeydown);
+  }, []);
 
-  const getImageIdByClick = (id: number): void => {
-    setImageId(id);
-    toggleModal();
+  useEffect(() => {
+    if (!isModalOpened && imageIndex !== null) setImageIndex(null);
+  }, [isModalOpened, imageIndex]);
+
+  const getImageIndex = (index: number): void => {
+    setImageIndex(index);
+    setIsModalOpened(true);
   };
 
-  const getLargeImgUrlForModal = (): string => {
-    const selectedImg = images.filter(({ id }) => id === imageId)[0];
+  const changeImageByKeydown = (e: KeyboardEvent): void => {
+    if (e.code === "ArrowRight") {
+      setImageIndex((prevIndex) =>
+        prevIndex !== null && prevIndex < images.length - 1
+          ? (prevIndex += 1)
+          : images.length - 1
+      );
+    } else {
+      setImageIndex((prevIndex) =>
+        prevIndex !== null && prevIndex > 0 ? (prevIndex -= 1) : 0
+      );
+    }
+  };
+
+  const changeImageByClick = (e: React.MouseEvent<SVGSVGElement>): void => {
+    if (e.currentTarget && e.currentTarget.id === "nextImage") {
+      setImageIndex((prevIndex) =>
+        prevIndex !== null && prevIndex < images.length - 1
+          ? (prevIndex += 1)
+          : images.length - 1
+      );
+    } else {
+      setImageIndex((prevIndex) =>
+        prevIndex !== null && prevIndex > 0 ? (prevIndex -= 1) : 0
+      );
+    }
+  };
+
+  const getLargeImgUrl = (): string => {
+    if (imageIndex === null) return "";
+    const selectedImg = images[imageIndex];
     return selectedImg ? selectedImg.largeImageURL : "";
   };
 
   return (
     <Gallery>
-      <ImageGalleryItem images={images} onSelectImage={getImageIdByClick} />
-      {showedModal && (
-        <Modal onClose={toggleModal}>
-          <img src={getLargeImgUrlForModal()} width="1000" alt="" />
+      <ImageGalleryItem images={images} getImageIndex={getImageIndex} />
+      {isModalOpened && (
+        <Modal onClose={(): void => setIsModalOpened(false)}>
+          <LeftArrow id="prevImage" onClick={changeImageByClick} />
+          <img src={getLargeImgUrl()} width="1000" alt="Big image" />
+          <RightArrow id="nextImage" onClick={changeImageByClick} />
         </Modal>
       )}
     </Gallery>

@@ -22,9 +22,9 @@ export const Modal: FC<ModalProps> = ({ onClose, children }): JSX.Element => {
   };
 
   useEffect(() => {
+    window.addEventListener("keydown", closeModal);
     if (isModalOpenedRef.current === false) {
       isModalOpenedRef.current = true;
-      window.addEventListener("keydown", closeModal);
       return;
     }
 

@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import styled from "styled-components";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 export const Gallery = styled.ul`
   display: grid;
@@ -11,4 +12,38 @@ export const Gallery = styled.ul`
   list-style: none;
   margin-left: auto;
   margin-right: auto;
+`;
+
+export const LeftArrow = styled(FaArrowLeft)`
+  position: absolute;
+  top: 50%;
+  left: -75px;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  color: #ffffff62;
+  cursor: pointer;
+  transition: color 300ms;
+
+  &:hover,
+  &:focus {
+    color: white;
+  }
+`;
+
+export const RightArrow = styled(FaArrowRight)`
+  position: absolute;
+  top: 50%;
+  right: -75px;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  color: #ffffff62;
+  cursor: pointer;
+  transition: color 300ms;
+
+  &:hover,
+  &:focus {
+    color: white;
+  }
 `;
