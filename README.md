@@ -6,4 +6,4 @@ The components of this app are developed using React's hooks, a feature introduc
 
 The visual styling of the app is implemented using styled-components, a CSS-in-JS library that enables the creation of reusable and encapsulated styling components. With styled-components, the app achieves a clean and maintainable styling structure while offering flexibility and dynamic styling capabilities.
 
-## Stack of used technologies: [HTML, REACT, JavaScript, TypeScript, REST API, AJAX]
+## Stack of used technologies: [HTML, CSS, REACT, JavaScript, TypeScript, Styled-components, REST API, AJAX]
